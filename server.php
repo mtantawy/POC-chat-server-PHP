@@ -3,7 +3,7 @@
 
 $socketTarget = $argv[1] ?? die('No Socket Target specified! (e.g. 127.0.0.1:8080)'.PHP_EOL);
 
-$socket = stream_socket_server("tcp://$socketTarget");
+$socket = stream_socket_server("tcp://$socketTarget", $errNo, $errStr);
 
 if (false === $socket) {
     echo "Did not get a resource, $errNo ($errStr)";
