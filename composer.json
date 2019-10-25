@@ -1,0 +1,5 @@
+{
+    "require": {
+        "react/stream": "^1.1"
+    }
+}
