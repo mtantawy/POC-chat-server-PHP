@@ -2,6 +2,7 @@
 
 use React\EventLoop\Factory;
 use React\Stream\DuplexResourceStream;
+use React\Stream\ReadableResourceStream;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -34,17 +35,7 @@ $stream->on('error', function (Exception $e) {
 
 $stream->write($clientName);
 
-
-$loop->addReadStream(STDIN, function ($stdin) use ($loop, &$stream) {
-	$message = '';
-    stream_set_blocking($stdin, false);
-
-    // Possibly can lead to OOM as it continues reading forever
-    while (0 !== mb_strlen($chunk = fread($stdin, 1024))) {
-    	$message .= $chunk;
-    }
-
-	$stream->write($message);
-});
+$stdin = new ReadableResourceStream(STDIN, $loop);
+$stdin->pipe($stream);
 
 $loop->run();

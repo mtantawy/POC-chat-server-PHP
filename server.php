@@ -40,7 +40,7 @@ while (1) {
                 fclose($c);
                 unset($connections[$peer]);
             } else {
-                $contents = trim(fread($c, 1024)); // can lead to long messages being split to multiple messages
+                $contents = fread($c, 1024); // can lead to long messages being split to multiple messages
                 fwrite($c, "\xE2\x9C\x94"); // ✔ ack receiving
                 // for debugging
                 // echo $peer.':'.$userNames[$peer].': '.trim($contents).PHP_EOL;
